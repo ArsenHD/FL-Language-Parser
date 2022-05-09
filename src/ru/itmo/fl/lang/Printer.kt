@@ -11,14 +11,21 @@ fun main(args: Array<String>) {
     if (args.size > 3) {
         println("Unexpected number of arguments: ${args.size}")
         println("Usage:")
-        println("./lang.sh [filename]? -mode [list|box|tree]?")
+        println("./printer.sh [filename]? -mode [list|box|tree]?")
         return
     }
 
-    val printMode = when {
-        "-mode" in args -> args.indexOf("-mode")
-            .let { args[it + 1] }
-            .let { PrintMode.fromString(it) }
+    @Suppress("NAME_SHADOWING")
+    val args = args.toMutableList()
+
+    val printMode = when ("-mode") {
+        in args -> {
+            val idx = args.indexOf("-mode")
+            val mode = args[idx + 1].let { PrintMode.fromString(it) }
+            args.removeAt(idx)
+            args.removeAt(idx)
+            mode
+        }
         else -> PrintMode.defaultMode()
     }
 
@@ -34,10 +41,11 @@ fun main(args: Array<String>) {
     }
 
     val lexer = LangLexer(input)
+    lexer.removeErrorListeners()
     val tokens = CommonTokenStream(lexer)
     val parser = LangParser(tokens)
 
     val program = parser.program().prog
-    val root = program.accept(PrintableTreeConverter)
+    val root = program.accept(PrintableTreeConverter, null)
     println(printMode.print(root))
 }
