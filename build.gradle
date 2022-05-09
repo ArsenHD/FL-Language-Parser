@@ -1,0 +1,46 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
+    id 'java'
+}
+
+group 'ru.itmo.fl.lang'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation("org.antlr:antlr4-runtime:4.10.1")
+    implementation("hu.webarticum:tree-printer:2.0.0")
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+sourceSets {
+    main {
+        java.setSrcDirs(["src", "gen"])
+        resources.setSrcDirs(["resources"])
+    }
+    test {
+        java.setSrcDirs(["test"])
+        resources.setSrcDirs(["testResources"])
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Uberjar',
+                'Implementation-Version': archiveVersion,
+                'Main-Class': 'ru.itmo.fl.lang.MainKt'
+    }
+    archivesBaseName = "uber-${project.name}"
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    with jar
+}
