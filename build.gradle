@@ -33,13 +33,25 @@ test {
     useJUnitPlatform()
 }
 
-task fatJar(type: Jar) {
+task fatJarPrinter(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Gradle Uberjar',
                 'Implementation-Version': archiveVersion,
-                'Main-Class': 'ru.itmo.fl.lang.MainKt'
+                'Main-Class': 'ru.itmo.fl.lang.PrinterKt'
     }
-    archivesBaseName = "uber-${project.name}"
+    archivesBaseName = "uber-${project.name}-printer"
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    with jar
+}
+
+task fatJarRunner(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Uberjar',
+                'Implementation-Version': archiveVersion,
+                'Main-Class': 'ru.itmo.fl.lang.RunnerKt'
+    }
+    archivesBaseName = "uber-${project.name}-runner"
     from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     with jar
