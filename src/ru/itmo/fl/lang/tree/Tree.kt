@@ -1,5 +1,7 @@
 package ru.itmo.fl.lang.tree
 
+import ru.itmo.fl.lang.util.ProgramState
+import ru.itmo.fl.lang.visitor.ExpressionEvaluationVisitor
 import ru.itmo.fl.lang.visitor.TreeVisitor
 
 abstract class TreeElement {
@@ -98,9 +100,12 @@ data class Block(val statements: List<Statement>) : TreeElement() {
 
 // expressions
 
-sealed class Expression : TreeElement() {
+sealed class Expression : Statement() {
     override fun <D, R> accept(visitor: TreeVisitor<D, R>, data: D): R =
         visitor.visitExpression(this, data)
+
+    fun evaluate(state: ProgramState): Any =
+        accept(ExpressionEvaluationVisitor, state)
 }
 
 sealed class BinaryExpression : Expression() {
