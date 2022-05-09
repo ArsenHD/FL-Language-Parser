@@ -1,6 +1,9 @@
-// Generated from C:/Users/arsen/IdeaProjects/Formal languages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
+// Generated from //wsl$/Ubuntu/home/arsen/FormalLanguages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
 
 package ru.itmo.fl.lang.antlr;
+
+import java.util.LinkedList;
+import ru.itmo.fl.lang.tree.*;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -19,7 +22,7 @@ public class LangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements L
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitProgram(LangParser.ProgramState ctx) { return visitChildren(ctx); }
+	@Override public T visitProgram(LangParser.ProgramContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

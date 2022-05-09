@@ -1,6 +1,9 @@
-// Generated from C:/Users/arsen/IdeaProjects/Formal languages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
+// Generated from //wsl$/Ubuntu/home/arsen/FormalLanguages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
 
 package ru.itmo.fl.lang.antlr;
+
+import java.util.LinkedList;
+import ru.itmo.fl.lang.tree.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -13,12 +16,12 @@ public interface LangListener extends ParseTreeListener {
 	 * Enter a parse tree produced by {@link LangParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void enterProgram(LangParser.ProgramState ctx);
+	void enterProgram(LangParser.ProgramContext ctx);
 	/**
 	 * Exit a parse tree produced by {@link LangParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void exitProgram(LangParser.ProgramState ctx);
+	void exitProgram(LangParser.ProgramContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LangParser#statement}.
 	 * @param ctx the parse tree

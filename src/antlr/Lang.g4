@@ -34,7 +34,11 @@ assignment returns [Assignment value]:
 ifStatement returns [IfStatement value]:
     IF LPAREN condition=expression RPAREN THEN thenBranch=block (ELSE elseBranch=block)?
     {
-        $value = new IfStatement($condition.value, $thenBranch.value, $elseBranch.value);
+        Block elseBlock = null;
+        if ($elseBranch.ctx != null) {
+            elseBlock = $elseBranch.value;
+        }
+        $value = new IfStatement($condition.value, $thenBranch.value, elseBlock);
     }
     ;
 
@@ -46,11 +50,11 @@ whileLoop returns [WhileLoop value]:
     ;
 
 input returns [InputFunction value]:
-    INPUT LPAREN RPAREN { $value = InputFunction.INSTANCE; }
+    INPUT LPAREN RPAREN SEMICOLON { $value = InputFunction.INSTANCE; }
     ;
 
 print returns [PrintFunction value]:
-    PRINT LPAREN expression RPAREN
+    PRINT LPAREN expression RPAREN SEMICOLON
     {
         $value = new PrintFunction($expression.value);
     }

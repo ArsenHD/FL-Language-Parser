@@ -1,6 +1,9 @@
-// Generated from C:/Users/arsen/IdeaProjects/Formal languages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
+// Generated from //wsl$/Ubuntu/home/arsen/FormalLanguages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
 
 package ru.itmo.fl.lang.antlr;
+
+import java.util.LinkedList;
+import ru.itmo.fl.lang.tree.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -18,13 +21,13 @@ public class LangBaseListener implements LangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgram(LangParser.ProgramState ctx) { }
+	@Override public void enterProgram(LangParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProgram(LangParser.ProgramState ctx) { }
+	@Override public void exitProgram(LangParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

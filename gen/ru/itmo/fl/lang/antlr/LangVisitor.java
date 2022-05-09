@@ -1,6 +1,9 @@
-// Generated from C:/Users/arsen/IdeaProjects/Formal languages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
+// Generated from //wsl$/Ubuntu/home/arsen/FormalLanguages/ANTLR_Homework/src/antlr\Lang.g4 by ANTLR 4.10.1
 
 package ru.itmo.fl.lang.antlr;
+
+import java.util.LinkedList;
+import ru.itmo.fl.lang.tree.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -17,7 +20,7 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProgram(LangParser.ProgramState ctx);
+	T visitProgram(LangParser.ProgramContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangParser#statement}.
 	 * @param ctx the parse tree
