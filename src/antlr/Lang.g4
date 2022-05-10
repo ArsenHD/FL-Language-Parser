@@ -15,7 +15,7 @@ statement returns [Statement stmt]:
     assignment { $stmt = $assignment.value; }
     | ifStatement { $stmt = $ifStatement.value; }
     | whileLoop { $stmt = $whileLoop.value; }
-    | input { $stmt = $input.value; }
+    | inputStmt { $stmt = $inputStmt.value; }
     | print { $stmt = $print.value; }
     ;
 
@@ -49,8 +49,8 @@ whileLoop returns [WhileLoop value]:
     }
     ;
 
-input returns [InputFunction value]:
-    INPUT LPAREN RPAREN SEMICOLON { $value = InputFunction.INSTANCE; }
+inputStmt returns [InputFunction value]:
+    input SEMICOLON { $value = $input.value; }
     ;
 
 print returns [PrintFunction value]:
@@ -81,43 +81,52 @@ statementList returns [List<Statement> statements]:
     ;
 
 expression returns [Expression value]:
-    <assoc=right> left=expression POW right=expression
-    { $value = new PowExpression($left.value, $right.value); }
-    | MINUS argument=expression
-    { $value = new UnaryMinusExpression($argument.value); }
-    | left=expression MUL right=expression
-    { $value = new MulExpression($left.value, $right.value); }
-    | left=expression DIV right=expression
-    { $value = new DivExpression($left.value, $right.value); }
-    | left=expression PLUS right=expression
-    { $value = new AddExpression($left.value, $right.value); }
-    | left=expression MINUS right=expression
-    { $value = new SubExpression($left.value, $right.value); }
-    | leftSE=simpleExpression EQ rightSE=simpleExpression
-    { $value = new EqualsExpression($leftSE.value, $rightSE.value); }
-    | leftSE=simpleExpression NEQ rightSE=simpleExpression
-    { $value = new NotEqualsExpression($leftSE.value, $rightSE.value); }
-    | leftSE=simpleExpression LEQ rightSE=simpleExpression
-    { $value = new LeqExpression($leftSE.value, $rightSE.value); }
-    | leftSE=simpleExpression LT rightSE=simpleExpression
-    { $value = new LessExpression($leftSE.value, $rightSE.value); }
-    | leftSE=simpleExpression GEQ rightSE=simpleExpression
-    { $value = new GeqExpression($leftSE.value, $rightSE.value); }
-    | leftSE=simpleExpression GT rightSE=simpleExpression
-    { $value = new GreaterExpression($leftSE.value, $rightSE.value); }
+    | left=arithmeticExpression EQ right=arithmeticExpression
+    { $value = new EqualsExpression($left.value, $right.value); }
+    | left=arithmeticExpression NEQ right=arithmeticExpression
+    { $value = new NotEqualsExpression($left.value, $right.value); }
+    | left=arithmeticExpression LEQ right=arithmeticExpression
+    { $value = new LeqExpression($left.value, $right.value); }
+    | left=arithmeticExpression LT right=arithmeticExpression
+    { $value = new LessExpression($left.value, $right.value); }
+    | left=arithmeticExpression GEQ right=arithmeticExpression
+    { $value = new GeqExpression($left.value, $right.value); }
+    | left=arithmeticExpression GT right=arithmeticExpression
+    { $value = new GreaterExpression($left.value, $right.value); }
     | NOT argument=expression
     { $value = new NotExpression($argument.value); }
-    | <assoc=right> left=expression AND right=expression
-    { $value = new AndExpression($left.value, $right.value); }
-    | <assoc=right> left=expression OR right=expression
-    { $value = new AndExpression($left.value, $right.value); }
+    | <assoc=right> lhs=expression AND rhs=expression
+    { $value = new AndExpression($lhs.value, $rhs.value); }
+    | <assoc=right> lhs=expression OR rhs=expression
+    { $value = new AndExpression($lhs.value, $rhs.value); }
+    | arithmeticExpression { $value = $arithmeticExpression.value; }
+    ;
+
+arithmeticExpression returns [Expression value]:
+    <assoc=right> left=arithmeticExpression POW right=arithmeticExpression
+    { $value = new PowExpression($left.value, $right.value); }
+    | MINUS argument=arithmeticExpression
+    { $value = new UnaryMinusExpression($argument.value); }
+    | left=arithmeticExpression MUL right=arithmeticExpression
+    { $value = new MulExpression($left.value, $right.value); }
+    | left=arithmeticExpression DIV right=arithmeticExpression
+    { $value = new DivExpression($left.value, $right.value); }
+    | left=arithmeticExpression PLUS right=arithmeticExpression
+    { $value = new AddExpression($left.value, $right.value); }
+    | left=arithmeticExpression MINUS right=arithmeticExpression
+    { $value = new SubExpression($left.value, $right.value); }
     | simpleExpression { $value = $simpleExpression.value; }
+    | input { $value = $input.value; }
     ;
 
 simpleExpression returns [Expression value]:
     id=ID { $value = new Variable($id.getText()); }
     | num=NUM { $value = new NumberExpression(Integer.parseInt($num.getText())); }
     | LPAREN expression RPAREN { $value = $expression.value; }
+    ;
+
+input returns [InputFunction value]:
+    INPUT LPAREN RPAREN { $value = InputFunction.INSTANCE; }
     ;
 
 ASSIGN: '=';

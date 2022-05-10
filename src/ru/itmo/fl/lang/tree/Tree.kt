@@ -64,7 +64,7 @@ data class WhileLoop(
         get() = listOf(condition, block)
 }
 
-object InputFunction : Statement() {
+object InputFunction : Expression() {
     override fun <D, R> accept(visitor: TreeVisitor<D, R>, data: D): R =
         visitor.visitInputFunction(this, data)
 

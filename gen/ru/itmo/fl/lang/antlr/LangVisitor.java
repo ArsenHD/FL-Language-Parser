@@ -52,11 +52,11 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhileLoop(LangParser.WhileLoopContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LangParser#input}.
+	 * Visit a parse tree produced by {@link LangParser#inputStmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInput(LangParser.InputContext ctx);
+	T visitInputStmt(LangParser.InputStmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangParser#print}.
 	 * @param ctx the parse tree
@@ -82,9 +82,21 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(LangParser.ExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LangParser#arithmeticExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArithmeticExpression(LangParser.ArithmeticExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LangParser#simpleExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSimpleExpression(LangParser.SimpleExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangParser#input}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInput(LangParser.InputContext ctx);
 }

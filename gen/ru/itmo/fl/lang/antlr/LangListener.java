@@ -73,15 +73,15 @@ public interface LangListener extends ParseTreeListener {
 	 */
 	void exitWhileLoop(LangParser.WhileLoopContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LangParser#input}.
+	 * Enter a parse tree produced by {@link LangParser#inputStmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterInput(LangParser.InputContext ctx);
+	void enterInputStmt(LangParser.InputStmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LangParser#input}.
+	 * Exit a parse tree produced by {@link LangParser#inputStmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitInput(LangParser.InputContext ctx);
+	void exitInputStmt(LangParser.InputStmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LangParser#print}.
 	 * @param ctx the parse tree
@@ -123,6 +123,16 @@ public interface LangListener extends ParseTreeListener {
 	 */
 	void exitExpression(LangParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LangParser#arithmeticExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterArithmeticExpression(LangParser.ArithmeticExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangParser#arithmeticExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitArithmeticExpression(LangParser.ArithmeticExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LangParser#simpleExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -132,4 +142,14 @@ public interface LangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSimpleExpression(LangParser.SimpleExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LangParser#input}.
+	 * @param ctx the parse tree
+	 */
+	void enterInput(LangParser.InputContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangParser#input}.
+	 * @param ctx the parse tree
+	 */
+	void exitInput(LangParser.InputContext ctx);
 }
