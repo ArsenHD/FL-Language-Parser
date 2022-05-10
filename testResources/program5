@@ -1,0 +1,10 @@
+var1 = 2;
+var2 = 3;
+res = var1 ^ var2 ^ var1;
+if (res == 512) then {
+    print(res);
+}
+while (res >= 1) {
+    print(res);
+    res = res / 2;
+}

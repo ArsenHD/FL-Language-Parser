@@ -1,0 +1,9 @@
+x = 2;
+print(x);
+if (x == 2) then {
+    y = 3;
+    while (y /= 0) {
+        print(y);
+        y = y - 1;
+    }
+}

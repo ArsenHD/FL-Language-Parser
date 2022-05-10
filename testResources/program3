@@ -1,0 +1,4 @@
+x = 2;
+y = input();
+print(x);
+print(y);

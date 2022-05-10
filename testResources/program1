@@ -1,0 +1,9 @@
+x = 2;
+y = 3;
+// first comment
+if (x == 2) then {
+    // second comment
+    x = 3;
+} else {
+    y = 2;
+}

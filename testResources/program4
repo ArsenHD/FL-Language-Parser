@@ -1,0 +1,7 @@
+x = input();
+y = input();
+if (0 <= x + y && x + y <= 100) then {
+    print(x * x + y * y);
+} else {
+    print(2 * x + 2 * y);
+}
