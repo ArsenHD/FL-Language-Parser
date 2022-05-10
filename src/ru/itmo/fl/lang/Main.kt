@@ -11,7 +11,7 @@ import ru.itmo.fl.lang.visitor.ProgramRunVisitor
 
 fun main(args: Array<String>) {
     @Suppress("NAME_SHADOWING")
-    val args = args.toList().drop(1).toMutableList()
+    val args = args.toList().toMutableList()
 
     if (args.isEmpty() || args.size > 3) {
         println("Unexpected number of arguments: ${args.size}")

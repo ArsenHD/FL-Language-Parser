@@ -1,1 +1,1 @@
-./gradlew fatJar && java -jar build/libs/uber-lang-*.jar "$@"
+./gradlew fatJar && java -jar build/libs/uber-lang-*.jar $@
