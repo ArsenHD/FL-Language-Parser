@@ -20,6 +20,7 @@ import ru.itmo.fl.lang.tree.TreeElement
 import ru.itmo.fl.lang.tree.UnaryMinusExpression
 import ru.itmo.fl.lang.tree.Variable
 import ru.itmo.fl.lang.util.ProgramState
+import kotlin.math.abs
 import kotlin.math.pow
 
 object ExpressionEvaluationVisitor : TreeVisitor<ProgramState, Any>() {
@@ -70,19 +71,27 @@ object ExpressionEvaluationVisitor : TreeVisitor<ProgramState, Any>() {
 
     override fun visitEqualsExpression(equalsExpression: EqualsExpression, data: ProgramState): Any {
         val (left, right) = equalsExpression.acceptChildren(this, data)
-        return left == right
+        return when {
+            left is Number && right is Number -> abs(left.toDouble() - right.toDouble()) < EPS
+            else -> left == right
+        }
     }
 
     override fun visitNotEqualsExpression(notEqualsExpression: NotEqualsExpression, data: ProgramState): Any {
         val (left, right) = notEqualsExpression.acceptChildren(this, data)
-        return left != right
+        return when {
+            left is Number && right is Number -> abs(left.toDouble() - right.toDouble()) >= EPS
+            else -> left != right
+        }
     }
 
     override fun visitLeqExpression(leqExpression: LeqExpression, data: ProgramState): Any {
         val (left, right) = leqExpression.acceptChildren(this, data)
         require(left is Number)
         require(right is Number)
-        return left.toDouble() <= right.toDouble()
+        val ld = left.toDouble()
+        val rd = right.toDouble()
+        return ld < rd || abs(ld - rd) < EPS
     }
 
     override fun visitLessExpression(lessExpression: LessExpression, data: ProgramState): Any {
@@ -96,7 +105,9 @@ object ExpressionEvaluationVisitor : TreeVisitor<ProgramState, Any>() {
         val (left, right) = geqExpression.acceptChildren(this, data)
         require(left is Number)
         require(right is Number)
-        return left.toDouble() >= right.toDouble()
+        val ld = left.toDouble()
+        val rd = right.toDouble()
+        return ld > rd || abs(ld - rd) < EPS
     }
 
     override fun visitGreaterExpression(greaterExpression: GreaterExpression, data: ProgramState): Any {
@@ -137,4 +148,6 @@ object ExpressionEvaluationVisitor : TreeVisitor<ProgramState, Any>() {
     override fun visitInputFunction(inputFunction: InputFunction, data: ProgramState): Any {
         return readLine()!!.toInt()
     }
+
+    private const val EPS = 1e-9
 }
